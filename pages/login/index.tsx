@@ -3,15 +3,12 @@ import Head from "next/head";
 import { LoginForm } from "@/components/auth/LoginForm";
 import { Tabs } from "antd";
 import { RegisterForm } from "@/components/auth/RegisterForm";
+import { LoginLayout } from "@/layouts/LoginLayout";
 
 const AuthPage: NextPage = () => {
     return (
-        <>
-          <Head>
-            <title>CloudStore / Auth</title>
-          </Head>
-          <main style={{ width: 400, margin: "50px auto" }}>
-            <Tabs
+      <LoginLayout title="CloudStore / Auth">
+        <Tabs
               items={[
                 {
                   label: "Log In",
@@ -25,9 +22,8 @@ const AuthPage: NextPage = () => {
                 },
               ]}
             />
-          </main>
-        </>
-      );
+      </LoginLayout>
+    );
 };
 
 export default AuthPage;

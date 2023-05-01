@@ -3,19 +3,18 @@ import nookies from "nookies";
 import { GetServerSidePropsContext, NextPage } from "next";
 import API from "@/api/config/axios";
 import * as Api from "../../api";
+import { Layout } from "@/layouts/Layout";
 
 interface Props {
     items: any
 }
 
-const CloudPage: NextPage = () => {
+const CloudPage: NextPage<Props> = ({ items }) => {
+    console.log(items);
     return (
-        <>
-            <Header/>
-            <main>
-                <h1>Cloud private page</h1>
-            </main>
-        </>
+        <Layout title="CloudStorage / My Cloud">
+            <h1>Cloud private page</h1>
+        </Layout>
     )
 };
 
@@ -24,15 +23,18 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
     API.defaults.headers.Authorization = `Bearer ${accessToken}`;
     
     try {
-        await Api.files.getFiles();
+        const items = await Api.files.getFiles();
         
         return {
-            props: {}
+            props: { items }
         }
     } catch (err) {
         console.log(err);
         return {
-            props: {}
+            redirect: {
+                destination: '/login',
+                permanent: false
+            }
         }
     }
 }
